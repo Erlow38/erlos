@@ -1,0 +1,44 @@
+.dock-window {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.dock-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    background-color: #e0e0e0;
+    border: 1px solid #adadad;
+    top: 0;
+    left: 0;
+    padding: 0 10px;
+    font-weight: 500;
+    font-size: 1em;
+    z-index: 1000;
+}
+
+.dock-menu div {
+    display: flex;
+    align-items: center;
+}
+
+.dock-menu img {
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+}
+
+.p-dock-action:hover {
+    cursor: pointer;
+}
+
+.dock-demo .p-dock {
+    z-index: 1000;
+}
+    
