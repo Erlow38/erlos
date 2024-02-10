@@ -13,12 +13,14 @@
     align-items: center;
     position: fixed;
     width: 100%;
-    background-color: #e0e0e0;
-    border: 1px solid #adadad;
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     top: 0;
     left: 0;
     padding: 0 10px;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 1em;
     z-index: 1000;
 }

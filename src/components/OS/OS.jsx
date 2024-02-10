@@ -2,16 +2,20 @@ import { useState } from 'react';
 import { Dock } from 'primereact/dock';
 import './OS.css';
 import ThemesDialog from '../themes-dialog/themes-dialog';
+import ChartsDialog from '../charts-dialog/charts-dialog';
 
 export default function OS() {
     const [position, setPosition] = useState('bottom');
     const [isThemesDialogVisible, setIsThemesDialogVisible] = useState(false);
+    const [isChartsDialogVisible, setIsChartsDialogVisible] = useState(false);
     const [selectedTheme, setSelectedTheme] = useState('url(../img/themes/original.jpg)');
     const [currentHour, setCurrentHour] = useState(new Date().toLocaleTimeString());
+    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
 
     useState(() => {
         const interval = setInterval(() => {
             setCurrentHour(new Date().toLocaleTimeString());
+            setCurrentDate(new Date().toLocaleDateString());
         }, 1000);
         return () => clearInterval(interval);
     }, []);
@@ -19,19 +23,23 @@ export default function OS() {
     const items = [
         {
             label: 'Erlow',
-            icon: () => <img alt="Erlow" src="../img/e.png" width="100%" />,
+            icon: () => <img alt="Erlow" src="../img/icons/e.png" width="100%" />,
         },
         {
             label: 'Web',
-            icon: () => <img alt="Web" src="../img/web.png" width="100%" />,
+            icon: () => <img alt="Web" src="../img/icons/web.png" width="100%" />,
         },
         {
             label: 'Themes',
-            icon: () => <img alt="Themes" src="../img/themes.png" width="100%" />,
+            icon: () => <img alt="Themes" src="../img/icons/themes.png" width="100%" />,
+        },
+        {
+            label: 'Charts',
+            icon: () => <img alt="Charts" src="../img/icons/Charts.png" width="100%" />,
         },
         {
             label: 'Add',
-            icon: () => <img alt="Add" src="../img/add.png" width="100%" />,
+            icon: () => <img alt="Add" src="../img/icons/add.png" width="100%" />,
         },
         {
             label: 'Trash',
@@ -58,18 +66,27 @@ export default function OS() {
         }
     };
 
+    // On click on Charts item, open a charts dialog
+    items.find(item => item.label === 'Charts').command = () => {
+        if (isChartsDialogVisible) {
+            setIsChartsDialogVisible(false);
+        } else {
+            setIsChartsDialogVisible(true);
+        }
+    };
+
     return (
         <div className="card dock">
             <div className='dock-menu'>
                 <div>
-                    <img alt="ErlOS" src="../img/e.png" width="30px" />
+                    <img alt="ErlOS" src="../img/icons/e.png" width="30px" />
                     <span className='os-title'>ErlOS</span>
                 </div>
-                <span className='hour'>{currentHour}</span>
+                <span className='hour'>{currentDate + " " + currentHour}</span>
             </div>
             <div className="dock-window" style={{backgroundImage: selectedTheme}}>
-                {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} /> : null
-                }
+                {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} /> : null}
+                {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} /> : null}
                 <Dock model={items} position={position} />
             </div>
         </div>
