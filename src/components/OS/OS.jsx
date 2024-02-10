@@ -6,6 +6,7 @@ import ChartsDialog from '../charts-dialog/charts-dialog';
 import DateHour from '../date-hour/date';
 import AddDialog from '../add-dialog/add-dialog';
 import FavIcons from '../fav-icons/fav-icons';
+import SearchBar from '../search-bar/search-bar';
 
 export default function OS() {
     const [position, setPosition] = useState('bottom');
@@ -114,6 +115,8 @@ export default function OS() {
                         );
                     })}
                 </div>
+
+                <SearchBar />
 
                 {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} /> : null}
                 {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} /> : null}

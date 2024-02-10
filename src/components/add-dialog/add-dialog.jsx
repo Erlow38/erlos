@@ -8,7 +8,7 @@ export default function AddDialog({isAddDialogVisible, setIsAddDialogVisible, fa
         const icon = document.getElementById('fav-icon-input').value;
     
         setFavIcons([...favIcons, { name, url, img: icon }]);
-        
+
         // Save to local storage
         localStorage.setItem('favIcons', JSON.stringify([...favIcons, { name, url, img: icon }]));
     
@@ -45,12 +45,10 @@ export default function AddDialog({isAddDialogVisible, setIsAddDialogVisible, fa
                                 <label htmlFor="fav-icon-input">Icon</label>
                                 <input id="fav-icon-input" type="text" />
                             </div>
-                            <div>
-                                <button onClick={onClickAddfav}>
-                                    Add
-                                </button>
-                            </div>
                         </div>
+                        <button onClick={onClickAddfav}>
+                            Add
+                        </button>
                     </div>
                 </div>
             </div>

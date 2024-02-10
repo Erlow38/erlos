@@ -1,0 +1,17 @@
+.search-bar-container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 150px;
+}
+
+.search-bar-container input {
+    max-width: 600px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #cac9c9;
+    font-size: 1em;
+}

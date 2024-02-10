@@ -37,13 +37,14 @@
 
 .add-dialog-body {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     height: 100%;
 }
 
 .p-grid-add {
     display: grid;
-    grid-template-columns: repeat(4);
+    grid-template-columns: repeat(3);
     grid-gap: 10px;
 }
 
@@ -65,6 +66,7 @@ input:focus {
 }
 
 button {
+    margin-top: 20px;
     padding: 5px 10px;
     border-radius: 5px;
     border: none;
