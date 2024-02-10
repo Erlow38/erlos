@@ -3,22 +3,20 @@ import { Dock } from 'primereact/dock';
 import './OS.css';
 import ThemesDialog from '../themes-dialog/themes-dialog';
 import ChartsDialog from '../charts-dialog/charts-dialog';
+import DateHour from '../date-hour/date';
+import AddDialog from '../add-dialog/add-dialog';
+import FavIcons from '../fav-icons/fav-icons';
 
 export default function OS() {
     const [position, setPosition] = useState('bottom');
+
     const [isThemesDialogVisible, setIsThemesDialogVisible] = useState(false);
     const [isChartsDialogVisible, setIsChartsDialogVisible] = useState(false);
-    const [selectedTheme, setSelectedTheme] = useState('url(../img/themes/original.jpg)');
-    const [currentHour, setCurrentHour] = useState(new Date().toLocaleTimeString());
-    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
+    const [isAddDialogVisible, setIsAddDialogVisible] = useState(false);
 
-    useState(() => {
-        const interval = setInterval(() => {
-            setCurrentHour(new Date().toLocaleTimeString());
-            setCurrentDate(new Date().toLocaleDateString());
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
+    // get favIcons from local storage
+    const [favIcons, setFavIcons] = useState(JSON.parse(localStorage.getItem('favIcons')) || []);
+    const [selectedTheme, setSelectedTheme] = useState(JSON.parse(localStorage.getItem('selectedTheme')) || 'url(../img/themes/original.jpg)');
 
     const items = [
         {
@@ -75,6 +73,30 @@ export default function OS() {
         }
     };
 
+    // On click on Add item, open a add dialog
+    items.find(item => item.label === 'Add').command = () => {
+        if (isAddDialogVisible) {
+            setIsAddDialogVisible(false);
+        } else {
+            setIsAddDialogVisible(true);
+        }
+    };
+
+    // On click on Trash item, show delete-icons
+    items.find(item => item.label === 'Trash').command = () => {
+        const deleteIcons = document.querySelectorAll('.delete-icons');
+        // If delete-icons are visible, hide them
+        if (deleteIcons[0].style.display === 'flex') {
+            deleteIcons.forEach(deleteIcon => {
+                deleteIcon.style.display = 'none';
+            });
+        } else {
+            deleteIcons.forEach(deleteIcon => {
+                deleteIcon.style.display = 'flex';
+            });
+        }
+    };
+
     return (
         <div className="card dock">
             <div className='dock-menu'>
@@ -82,11 +104,21 @@ export default function OS() {
                     <img alt="ErlOS" src="../img/icons/e.png" width="30px" />
                     <span className='os-title'>ErlOS</span>
                 </div>
-                <span className='hour'>{currentDate + " " + currentHour}</span>
+                <DateHour />
             </div>
             <div className="dock-window" style={{backgroundImage: selectedTheme}}>
+                <div className='fav-icons-display'>
+                    {favIcons.map((favIcon, index) => {
+                        return (
+                            <FavIcons key={index} name={favIcon.name} url={favIcon.url} img={favIcon.img} />
+                        );
+                    })}
+                </div>
+
                 {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} /> : null}
                 {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} /> : null}
+                {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
+
                 <Dock model={items} position={position} />
             </div>
         </div>

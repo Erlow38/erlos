@@ -1,0 +1,55 @@
+.fav-icons-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+}
+
+.fav-icons-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.fav-icons-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.fav-icons-image:hover {
+    transform: scale(1.05);
+}
+
+.fav-icons-name {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.delete-icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    background-color: rgb(238, 77, 77);
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.delete-icons:hover {
+    transform: scale(1.1);
+}

@@ -24,7 +24,6 @@ export default function ChartsDialog({isChartsDialogVisible, setIsChartsDialogVi
                     <div className="charts-dialog-body">
                         <DoughnutChart dataset={[300, 200, 50]} labels={["A", "B", "C"]} />
                         <BarChart dataset={[100, 200, 300, 400, 500]} labels={["A", "B", "C", "D", "E"]} label="My First dataset" />
-                        <DoughnutChart dataset={[100, 200, 300]} labels={["A", "B", "C"]} />
                     </div>
                 </div>
             </div>

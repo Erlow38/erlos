@@ -13,6 +13,10 @@ export default function ThemesDialog({isThemesDialogVisible, setIsThemesDialogVi
 
     const onThemeSelect = (theme) => {
         setSelectedTheme(`url(../img/themes/${theme.class}.jpg)`);
+
+        // Save selected theme to local storage
+        localStorage.setItem('selectedTheme', JSON.stringify(`url(../img/themes/${theme.class}.jpg)`));
+
         setIsThemesDialogVisible(false);
     }
 
