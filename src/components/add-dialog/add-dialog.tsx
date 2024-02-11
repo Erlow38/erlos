@@ -1,21 +1,34 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './add-dialog.css';
 
-export default function AddDialog({isAddDialogVisible, setIsAddDialogVisible, favIcons, setFavIcons}) {
-    function onClickAddfav() {
-        const name = document.getElementById('fav-name-input').value;
-        const url = document.getElementById('fav-url-input').value;
-        const icon = document.getElementById('fav-icon-input').value;
-    
+interface FavIcon {
+    name: string;
+    url: string;
+    img: string;
+}
+
+interface AddDialogProps {
+    isAddDialogVisible: boolean;
+    setIsAddDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    favIcons: FavIcon[];
+    setFavIcons: React.Dispatch<React.SetStateAction<FavIcon[]>>;
+}
+
+const AddDialog: React.FC<AddDialogProps> = ({ isAddDialogVisible, setIsAddDialogVisible, favIcons, setFavIcons }) => {
+    const onClickAddfav = () => {
+        const name = (document.getElementById('fav-name-input') as HTMLInputElement).value;
+        const url = (document.getElementById('fav-url-input') as HTMLInputElement).value;
+        const icon = (document.getElementById('fav-icon-input') as HTMLInputElement).value;
+
         setFavIcons([...favIcons, { name, url, img: icon }]);
 
         // Save to local storage
         localStorage.setItem('favIcons', JSON.stringify([...favIcons, { name, url, img: icon }]));
-    
+
         setIsAddDialogVisible(!isAddDialogVisible);
     }
 
-    function setDialogVisible() {
+    const setDialogVisible = () => {
         setIsAddDialogVisible(!isAddDialogVisible);
     }
 
@@ -55,3 +68,5 @@ export default function AddDialog({isAddDialogVisible, setIsAddDialogVisible, fa
         </div>
     )
 }
+
+export default AddDialog;

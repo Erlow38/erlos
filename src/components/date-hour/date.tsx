@@ -1,11 +1,10 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function DateHour() {
+const DateHour: React.FC = () => {
+    const [currentHour, setCurrentHour] = useState<string>(new Date().toLocaleTimeString());
+    const [currentDate, setCurrentDate] = useState<string>(new Date().toLocaleDateString());
 
-    const [currentHour, setCurrentHour] = useState(new Date().toLocaleTimeString());
-    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString());
-
-    useState(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
             setCurrentHour(new Date().toLocaleTimeString());
             setCurrentDate(new Date().toLocaleDateString());
@@ -17,3 +16,5 @@ export default function DateHour() {
         <span className='hour'>{currentDate + " " + currentHour}</span>
     );
 }
+
+export default DateHour;

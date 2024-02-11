@@ -1,4 +1,5 @@
-import OS from './components/OS/OS';
+import React from 'react';
+import OS from './components/OS/OS.tsx';
 
 function App() {
   return (

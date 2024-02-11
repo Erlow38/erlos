@@ -1,11 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
 import './bar-chart.css';
 
-export default function BarChart({ dataset, labels, label }) {
-    const [chartData, setChartData] = useState({});
-    const [chartOptions, setChartOptions] = useState({});
+interface BarChartProps {
+    dataset: number[];
+    labels: string[];
+    label: string;
+}
+
+const BarChart: React.FC<BarChartProps> = ({ dataset, labels, label }) => {
+    const [chartData, setChartData] = useState<any>({});
+    const [chartOptions, setChartOptions] = useState<any>({});
 
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -16,7 +21,7 @@ export default function BarChart({ dataset, labels, label }) {
             labels: labels,
             datasets: [
                 {
-                    label: 'My First dataset',
+                    label: label,
                     backgroundColor: documentStyle.getPropertyValue('--blue-500'),
                     borderColor: documentStyle.getPropertyValue('--blue-500'),
                     data: dataset
@@ -60,7 +65,7 @@ export default function BarChart({ dataset, labels, label }) {
 
         setChartData(data);
         setChartOptions(options);
-    }, []);
+    }, [dataset, labels, label]);
 
     return (
         <div className="card">
@@ -68,4 +73,5 @@ export default function BarChart({ dataset, labels, label }) {
         </div>
     )
 }
-        
+
+export default BarChart;

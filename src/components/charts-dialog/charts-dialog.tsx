@@ -1,11 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import './charts-dialog.css';
-import DoughnutChart from "../charts/doughnut-chart/doughnut-chart";
-import BarChart from "../charts/bar-chart/bar-chart";
+import DoughnutChart from "../charts/doughnut-chart/doughnut-chart.tsx";
+import BarChart from "../charts/bar-chart/bar-chart.tsx";
 
-export default function ChartsDialog({isChartsDialogVisible, setIsChartsDialogVisible}) {
+interface ChartsDialogProps {
+    isChartsDialogVisible: boolean;
+    setIsChartsDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-    function setDialogVisible() {
+const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setIsChartsDialogVisible }) => {
+
+    const setDialogVisible = () => {
         setIsChartsDialogVisible(!isChartsDialogVisible);
     }
 
@@ -30,3 +35,5 @@ export default function ChartsDialog({isChartsDialogVisible, setIsChartsDialogVi
         </div>
     )
 }
+
+export default ChartsDialog;

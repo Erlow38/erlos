@@ -1,11 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
 import './doughnut-chart.css';
 
-export default function DoughnutChart({ dataset, labels }) {
-    const [chartData, setChartData] = useState({});
-    const [chartOptions, setChartOptions] = useState({});
+interface DoughnutChartProps {
+    dataset: number[];
+    labels: string[];
+}
+
+const DoughnutChart: React.FC<DoughnutChartProps> = ({ dataset, labels }) => {
+    const [chartData, setChartData] = useState<any>({});
+    const [chartOptions, setChartOptions] = useState<any>({});
 
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -33,7 +37,7 @@ export default function DoughnutChart({ dataset, labels }) {
 
         setChartData(data);
         setChartOptions(options);
-    }, []);
+    }, [dataset, labels]);
 
     return (
         <div className="card flex justify-content-center">
@@ -41,4 +45,5 @@ export default function DoughnutChart({ dataset, labels }) {
         </div>
     )
 }
-        
+
+export default DoughnutChart;
