@@ -21,11 +21,11 @@
     height: 70px;
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: transform 0.2s;
 }
 
 .fav-icons-image:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .fav-icons-name {
