@@ -55,7 +55,7 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
             <div className="charts-dialog">
                 <div className="charts-dialog-content">
                     <div className="charts-dialog-header">
-                        <div className="charts-dialog-title">charts</div>
+                        <div className="charts-dialog-title">Charts</div>
                         <div className="charts-dialog-close pointer" onClick={setDialogVisible}>
                             <span className="pi pi-times">&times;</span>
                         </div>
