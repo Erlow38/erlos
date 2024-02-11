@@ -8,7 +8,11 @@ import AddDialog from '../add-dialog/add-dialog.tsx';
 import FavIcons from '../fav-icons/fav-icons.tsx';
 import SearchBar from '../search-bar/search-bar.tsx';
 
-export default function OS() {
+interface OSProps {
+    visits: string | null;
+}
+
+const OS: React.FC<OSProps> = ({ visits }) => {
     const [isThemesDialogVisible, setIsThemesDialogVisible] = useState<boolean>(false);
     const [isChartsDialogVisible, setIsChartsDialogVisible] = useState<boolean>(false);
     const [isAddDialogVisible, setIsAddDialogVisible] = useState<boolean>(false);
@@ -136,7 +140,7 @@ export default function OS() {
                 <SearchBar />
 
                 {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} setSelectedTheme={setSelectedTheme} /> : null}
-                {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} /> : null}
+                {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} visits={visits} /> : null}
                 {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
 
                 <Dock model={items} position={'bottom'} />
@@ -144,3 +148,5 @@ export default function OS() {
         </div>
     )
 }
+
+export default OS;
