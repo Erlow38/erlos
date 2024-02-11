@@ -2,9 +2,9 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 70px;
-    height: 70px;
-    margin: 10px 20px 10px 10px;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
 }
 
 .fav-icons-link {
@@ -17,8 +17,8 @@
 }
 
 .fav-icons-image {
-    width: 70px;
-    height: 70px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.2s;
@@ -30,6 +30,7 @@
 
 .fav-icons-name {
     text-align: center;
+    width: 100%;
     font-size: 0.8em;
     margin-top: 5px;
 }
