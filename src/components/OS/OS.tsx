@@ -7,6 +7,7 @@ import DateHour from '../date-hour/date.tsx';
 import AddDialog from '../add-dialog/add-dialog.tsx';
 import FavIcons from '../fav-icons/fav-icons.tsx';
 import SearchBar from '../search-bar/search-bar.tsx';
+import HelpDialog from '../help-dialog/help-dialog.tsx';
 
 interface OSProps {
     visits: string | null;
@@ -16,12 +17,17 @@ const OS: React.FC<OSProps> = ({ visits }) => {
     const [isThemesDialogVisible, setIsThemesDialogVisible] = useState<boolean>(false);
     const [isChartsDialogVisible, setIsChartsDialogVisible] = useState<boolean>(false);
     const [isAddDialogVisible, setIsAddDialogVisible] = useState<boolean>(false);
+    const [isHelpDialogVisible, setIsHelpDialogVisible] = useState<boolean>(false);
 
     // get from local storage
     const [favIcons, setFavIcons] = useState<Array<any>>(JSON.parse(localStorage.getItem('favIcons') as string) || []);
     const storedTheme = localStorage.getItem('selectedTheme');
     const initialTheme = storedTheme ? JSON.parse(storedTheme) : 'url(./img/themes/original.jpg)';
+    const storedMode = localStorage.getItem('selectedMode');
+    const initialMode = storedMode ? JSON.parse(storedMode) : 'light';
+
     const [selectedTheme, setSelectedTheme] = useState<string>(initialTheme);
+    const [selectedMode, setSelectedMode] = useState<string>(initialMode);
 
     // On click on Erlow item, open my personal website
     const items: Array<{ label: string; icon: () => JSX.Element; command?: () => void }> = [
@@ -48,6 +54,10 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         {
             label: 'Trash',
             icon: () => <img alt="trash" src="https://primefaces.org/cdn/primereact/images/dock/trash.png" width="100%" />,
+        },
+        {
+            label: 'Help',
+            icon: () => <img alt="help" src="./img/icons/help.png" width="100%" />,
         }
     ];
 
@@ -119,6 +129,26 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         };
     }
 
+    // On click on Help item, open a help dialog
+    const helpItem = items.find(item => item.label === 'Help');
+    if (helpItem) {
+        helpItem.command = () => {
+            if (isHelpDialogVisible) {
+                setIsHelpDialogVisible(false);
+            } else {
+                setIsHelpDialogVisible(true);
+            }
+        };
+    }
+
+    if (selectedMode === 'dark') {
+        document.body.classList.add('dark');
+        document.body.classList.remove('light');
+    } else {
+        document.body.classList.add('light');
+        document.body.classList.remove('dark');
+    }
+
     return (
         <div className="card dock">
             <div className='dock-menu'>
@@ -139,9 +169,10 @@ const OS: React.FC<OSProps> = ({ visits }) => {
 
                 <SearchBar />
 
-                {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} setSelectedTheme={setSelectedTheme} /> : null}
+                {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} setSelectedTheme={setSelectedTheme} setSelectedMode={setSelectedMode} /> : null}
                 {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} visits={visits} /> : null}
                 {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
+                {isHelpDialogVisible ? <HelpDialog setIsHelpDialogVisible={setIsHelpDialogVisible} isHelpDialogVisible={isHelpDialogVisible} /> : null}
 
                 <Dock model={items} position={'bottom'} />
             </div>

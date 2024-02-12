@@ -48,15 +48,15 @@ const AddDialog: React.FC<AddDialogProps> = ({ isAddDialogVisible, setIsAddDialo
                         <div className="p-grid-add">
                             <div>
                                 <label htmlFor="fav-name-input">Name</label>
-                                <input id="fav-name-input" type="text" />
+                                <input id="fav-name-input" type="text" placeholder="ex: Erlow" />
                             </div>
                             <div>
                                 <label htmlFor="fav-url-input">URL</label>
-                                <input id="fav-url-input" type="text" />
+                                <input id="fav-url-input" type="text" placeholder="ex: https://erlow.com" />
                             </div>
                             <div>
                                 <label htmlFor="fav-icon-input">Icon</label>
-                                <input id="fav-icon-input" type="text" />
+                                <input id="fav-icon-input" type="text" placeholder="ex: https://erlow.com/favicon.ico" />
                             </div>
                         </div>
                         <button onClick={onClickAddfav}>

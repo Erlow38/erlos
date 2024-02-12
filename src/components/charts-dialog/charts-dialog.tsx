@@ -61,7 +61,7 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                         </div>
                     </div>
                     <div className="charts-dialog-body">
-                        <DoughnutChart dataset={[visitsNumber, 1000]} labels={["Visits", "Goal"]} />
+                        <DoughnutChart dataset={[visitsNumber, 1000 - visitsNumber]} labels={["Visits", "Goal"]} />
                         <BarChart dataset={[memoryUsedMB, fps]} labels={["Memory Used (MB)", "FPS"]} label="Performance indicator" />
                     </div>
                 </div>

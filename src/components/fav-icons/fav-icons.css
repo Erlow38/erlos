@@ -4,7 +4,7 @@
     flex-direction: column;
     width: 64px;
     height: 64px;
-    margin: 8px;
+    margin: 16px 16px 16px 16px; /* top right bottom left */
 }
 
 .fav-icons-link {

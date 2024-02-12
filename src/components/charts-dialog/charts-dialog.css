@@ -40,3 +40,21 @@
     flex-wrap: wrap;
     height: 100%;
 }
+
+body.light .charts-dialog-container {
+    background-color: aliceblue;
+    color: black;
+}
+
+body.dark .charts-dialog-container {
+    background-color: #333;
+    color: white;
+}
+
+body.light .charts-dialog-item:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark .charts-dialog-item:hover {
+    background-color: #555;
+}

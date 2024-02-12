@@ -83,3 +83,33 @@ button:hover {
 button:active {
     background-color: #004080;
 }
+
+body.light .add-dialog-container {
+    background-color: aliceblue;
+    color: black;
+}
+
+body.dark .add-dialog-container {
+    background-color: #333;
+    color: white;
+}
+
+body.light .add-dialog-item:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark .add-dialog-item:hover {
+    background-color: #555;
+}
+
+body.light input {
+    background-color: aliceblue;
+    color: black;
+    border: 1px solid #cac9c9;
+}
+
+body.dark input {
+    background-color: #333;
+    color: white;
+    border: 1px solid #535353;
+}
