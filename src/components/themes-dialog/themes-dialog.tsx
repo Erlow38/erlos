@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Draggable from 'react-draggable'; // Import de react-draggable
 import './themes-dialog.css';
 
 interface Theme {
@@ -82,35 +83,38 @@ const ThemesDialog: React.FC<ThemesDialogProps> = ({ isThemesDialogVisible, setI
     });
 
     return (
-        <div className="themes-dialog-container">
-            <div className="themes-dialog">
-                <div className="themes-dialog-content">
-                    <div className="themes-dialog-header">
-                        <div className="themes-dialog-title">Themes</div>
-                        <div className="themes-dialog-close pointer" onClick={setDialogVisible}>
-                            <span className="pi pi-times">&times;</span>
+        <Draggable handle=".themes-dialog-header">
+            <div className="themes-dialog-container">
+                <div className="themes-dialog">
+                    <div className="themes-dialog-content">
+                        <div className="themes-dialog-header">
+                            <div className="themes-dialog-title">Themes</div>
+                            <div className="themes-dialog-close pointer" onClick={setDialogVisible}>
+                                <span className="pi pi-times">&times;</span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="themes-dialog-body">
-                        <div className="p-grid">
-                            {themeItems}
+    
+                        <div className="themes-dialog-body">
+                            <div className="p-grid">
+                                {themeItems}
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="themes-dialog-header">
-                        <div className="themes-dialog-title">Modes</div>
-                    </div>
-
-                    <div className="themes-dialog-body">
-                        <div className="p-grid">
-                            {modeItems}
+    
+                        <div className="themes-dialog-header">
+                            <div className="themes-dialog-title">Modes</div>
+                        </div>
+    
+                        <div className="themes-dialog-body">
+                            <div className="p-grid">
+                                {modeItems}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Draggable>
     )
 }
+    
 
 export default ThemesDialog;

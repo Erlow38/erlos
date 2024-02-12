@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Draggable from 'react-draggable'; // Import de react-draggable
 import './add-dialog.css';
 
 interface FavIcon {
@@ -33,39 +34,41 @@ const AddDialog: React.FC<AddDialogProps> = ({ isAddDialogVisible, setIsAddDialo
     }
 
     return (
-        <div className="add-dialog-container">
-            <div className="add-dialog">
-                <div className="add-dialog-content">
-                    <div className="add-dialog-header">
-                        <div className="add-dialog-title">Add</div>
-                        <div className="add-dialog-close pointer" onClick={setDialogVisible}>
-                            <span className="pi pi-times">&times;</span>
+        <Draggable handle=".add-dialog-header">
+            <div className="add-dialog-container">
+                <div className="add-dialog">
+                    <div className="add-dialog-content">
+                        <div className="add-dialog-header">
+                            <div className="add-dialog-title">Add</div>
+                            <div className="add-dialog-close pointer" onClick={setDialogVisible}>
+                                <span className="pi pi-times">&times;</span>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                    <div className="add-dialog-body">
-                        <div className="p-grid-add">
-                            <div>
-                                <label htmlFor="fav-name-input">Name</label>
-                                <input id="fav-name-input" type="text" placeholder="ex: Erlow" />
+                        <div className="add-dialog-body">
+                            <div className="p-grid-add">
+                                <div>
+                                    <label htmlFor="fav-name-input">Name</label>
+                                    <input id="fav-name-input" type="text" placeholder="ex: Erlow" />
+                                </div>
+                                <div>
+                                    <label htmlFor="fav-url-input">URL</label>
+                                    <input id="fav-url-input" type="text" placeholder="ex: https://erlow.com" />
+                                </div>
+                                <div>
+                                    <label htmlFor="fav-icon-input">Icon</label>
+                                    <input id="fav-icon-input" type="text" placeholder="ex: https://erlow.com/favicon.ico" />
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="fav-url-input">URL</label>
-                                <input id="fav-url-input" type="text" placeholder="ex: https://erlow.com" />
-                            </div>
-                            <div>
-                                <label htmlFor="fav-icon-input">Icon</label>
-                                <input id="fav-icon-input" type="text" placeholder="ex: https://erlow.com/favicon.ico" />
-                            </div>
+                            <button onClick={onClickAddfav}>
+                                Add
+                            </button>
                         </div>
-                        <button onClick={onClickAddfav}>
-                            Add
-                        </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </Draggable>
     )
 }
 

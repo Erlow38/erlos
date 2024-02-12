@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Draggable from 'react-draggable'; // Import de react-draggable
 import './charts-dialog.css';
 import DoughnutChart from "../charts/doughnut-chart/doughnut-chart.tsx";
 import BarChart from "../charts/bar-chart/bar-chart.tsx";
@@ -51,22 +52,24 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
     }, []);
 
     return (
-        <div className="charts-dialog-container">
-            <div className="charts-dialog">
-                <div className="charts-dialog-content">
-                    <div className="charts-dialog-header">
-                        <div className="charts-dialog-title">Charts</div>
-                        <div className="charts-dialog-close pointer" onClick={setDialogVisible}>
-                            <span className="pi pi-times">&times;</span>
+        <Draggable handle=".charts-dialog-header">
+            <div className="charts-dialog-container">
+                <div className="charts-dialog">
+                    <div className="charts-dialog-content">
+                        <div className="charts-dialog-header">
+                            <div className="charts-dialog-title">Charts</div>
+                            <div className="charts-dialog-close pointer" onClick={setDialogVisible}>
+                                <span className="pi pi-times">&times;</span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="charts-dialog-body">
-                        <DoughnutChart dataset={[visitsNumber, 1000 - visitsNumber]} labels={["Visits", "Goal"]} />
-                        <BarChart dataset={[memoryUsedMB, fps]} labels={["Memory Used (MB)", "FPS"]} label="Performance indicator" />
+                        <div className="charts-dialog-body">
+                            <DoughnutChart dataset={[visitsNumber, 1000 - visitsNumber]} labels={["Visits", "Goal"]} />
+                            <BarChart dataset={[memoryUsedMB, fps]} labels={["Memory Used (MB)", "FPS"]} label="Performance indicator" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </Draggable>
     )
 }
 
