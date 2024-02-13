@@ -2,10 +2,9 @@
     position: fixed;
     display: flex;
     justify-content: center;
-    bottom: 0;
+    bottom: 150px;
     left: 0;
     width: 100%;
-    padding: 150px;
 }
 
 .search-bar-container input {

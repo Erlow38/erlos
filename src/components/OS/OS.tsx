@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dock } from 'primereact/dock';
 import './OS.css';
 import ThemesDialog from '../themes-dialog/themes-dialog.tsx';

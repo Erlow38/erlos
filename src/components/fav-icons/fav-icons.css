@@ -1,10 +1,13 @@
 .fav-icons-container {
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    width: 64px;
-    height: 64px;
-    margin: 16px 16px 16px 16px; /* top right bottom left */
+    width: 100px;
+    height: 100px;
+    cursor: move;
+    color: white;
 }
 
 .fav-icons-link {
@@ -13,7 +16,6 @@
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: aliceblue;
 }
 
 .fav-icons-image {
@@ -37,8 +39,8 @@
 
 .delete-icons {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 10px;
     display: none;
     align-items: center;
     justify-content: center;
