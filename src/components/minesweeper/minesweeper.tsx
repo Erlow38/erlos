@@ -52,19 +52,23 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
         setIsMinesweeperDialogVisible(!isMinesweeperDialogVisible);
     }
 
-    const [grid, setGrid] = useState(generateEmptyGrid());
+    const [grid, setGrid] = useState(() => {
+        const initialGrid = generateEmptyGrid();
+        placeMines(initialGrid);
+        return initialGrid;
+    });
     const [gameOver, setGameOver] = useState(false);
     const [gameWon, setGameWon] = useState(false); 
 
-    useEffect(() => {
-        placeMines(grid);
-    }, []);
-
     const resetGame = () => {
         // Disabled the possibility to click on the grid after game over
-        setGrid(generateEmptyGrid());
+        setGrid(() => {
+            const newGrid = generateEmptyGrid();
+            placeMines(newGrid);
+            return newGrid;
+        });
         setTimeout(() => {
-            setDialogVisible();
+            setGameOver(false);
         }, 3000);
     };
 
@@ -82,17 +86,27 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
 
     const checkGameWon = () => {
         let nonMineCellsRevealed = 0;
+        let unrevealedMines = 0;
+    
         grid.forEach(row => {
             row.forEach(cell => {
                 if (!cell.isMine && cell.isRevealed) {
                     nonMineCellsRevealed++;
+                } else if (cell.isMine && !cell.isRevealed) {
+                    unrevealedMines++;
                 }
             });
         });
-        if (nonMineCellsRevealed === SIZE * SIZE - MINES_COUNT) {
+    
+        if (nonMineCellsRevealed === SIZE * SIZE - MINES_COUNT || unrevealedMines === 0) {
             setGameWon(true);
+            setTimeout(() => {
+                setGameWon(false);
+                resetGame();
+            }, 3000);
         }
     };
+    
 
     const renderCell = (x, y) => {
         const cell = grid[x][y];
@@ -128,7 +142,7 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
                                     ))}
                                     <div className='game-over'>
                                         {gameOver && 'Game Over!'}
-                                        {gameWon && 'Congratulations! You won!'}
+                                        {gameWon && 'You won!'}
                                     </div>
                                 </div>
                             </div>

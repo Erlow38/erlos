@@ -70,7 +70,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         },
         {
             label: 'Trash',
-            icon: () => <img alt="trash" src="https://primefaces.org/cdn/primereact/images/dock/trash.png" width="100%" />,
+            icon: () => <img alt="trash" src="./img/icons/trash.png" width="100%" />,
         },
         {
             label: 'Minesweeper',
