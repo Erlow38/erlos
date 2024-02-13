@@ -14,6 +14,13 @@ interface OSProps {
     visits: string | null;
 }
 
+interface FavIcon {
+    name: string;
+    url: string;
+    img: string;
+    position: { x: number; y: number };
+}
+
 const OS: React.FC<OSProps> = ({ visits }) => {
     const [isThemesDialogVisible, setIsThemesDialogVisible] = useState<boolean>(false);
     const [isChartsDialogVisible, setIsChartsDialogVisible] = useState<boolean>(false);
@@ -30,6 +37,14 @@ const OS: React.FC<OSProps> = ({ visits }) => {
 
     const [selectedTheme, setSelectedTheme] = useState<string>(initialTheme);
     const [selectedMode, setSelectedMode] = useState<string>(initialMode);
+
+    const [favIconsList, setFavIconsList] = useState<Array<FavIcon>>([]);
+
+    useEffect(() => {
+        // Charger les icônes de favoris depuis le stockage local
+        const storedFavIcons = JSON.parse(localStorage.getItem('favIcons') || '[]');
+        setFavIconsList(storedFavIcons);
+    }, []);
 
     // On click on Erlow item, open my personal website
     const items: Array<{ label: string; icon: () => JSX.Element; command?: () => void }> = [
@@ -180,7 +195,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
                 <div className='fav-icons-display'>
                     {favIcons.map((favIcon, index) => {
                         return (
-                            <FavIcons key={index} name={favIcon.name} url={favIcon.url} img={favIcon.img} />
+                            <FavIcons key={index} name={favIcon.name} url={favIcon.url} img={favIcon.img} position={favIcon.position} />
                         );
                     })}
                 </div>
