@@ -8,6 +8,7 @@ import AddDialog from '../add-dialog/add-dialog.tsx';
 import FavIcons from '../fav-icons/fav-icons.tsx';
 import SearchBar from '../search-bar/search-bar.tsx';
 import HelpDialog from '../help-dialog/help-dialog.tsx';
+import Minesweeper from '../minesweeper/minesweeper.tsx';
 
 interface OSProps {
     visits: string | null;
@@ -18,6 +19,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
     const [isChartsDialogVisible, setIsChartsDialogVisible] = useState<boolean>(false);
     const [isAddDialogVisible, setIsAddDialogVisible] = useState<boolean>(false);
     const [isHelpDialogVisible, setIsHelpDialogVisible] = useState<boolean>(false);
+    const [isMinesweeperDialogVisible, setIsMinesweeperDialogVisible] = useState<boolean>(false);
 
     // get from local storage
     const [favIcons, setFavIcons] = useState<Array<any>>(JSON.parse(localStorage.getItem('favIcons') as string) || []);
@@ -54,6 +56,10 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         {
             label: 'Trash',
             icon: () => <img alt="trash" src="https://primefaces.org/cdn/primereact/images/dock/trash.png" width="100%" />,
+        },
+        {
+            label: 'Minesweeper',
+            icon: () => <img alt="minesweeper" src="./img/icons/minesweeper.png" width="100%" />,
         },
         {
             label: 'Help',
@@ -129,6 +135,18 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         };
     }
 
+    // On click on Minesweeper item, open a minesweeper dialog
+    const minesweeperItem = items.find(item => item.label === 'Minesweeper');
+    if (minesweeperItem) {
+        minesweeperItem.command = () => {
+            if (isMinesweeperDialogVisible) {
+                setIsMinesweeperDialogVisible(false);
+            } else {
+                setIsMinesweeperDialogVisible(true);
+            }
+        };
+    }
+
     // On click on Help item, open a help dialog
     const helpItem = items.find(item => item.label === 'Help');
     if (helpItem) {
@@ -173,6 +191,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
                 {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} visits={visits} /> : null}
                 {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
                 {isHelpDialogVisible ? <HelpDialog setIsHelpDialogVisible={setIsHelpDialogVisible} isHelpDialogVisible={isHelpDialogVisible} /> : null}
+                {isMinesweeperDialogVisible ? <Minesweeper setIsMinesweeperDialogVisible={setIsMinesweeperDialogVisible} isMinesweeperDialogVisible={isMinesweeperDialogVisible} /> : null}
 
                 <Dock model={items} position={'bottom'} />
             </div>
