@@ -38,7 +38,9 @@ const FavIcons: React.FC<FavIconsProps> = ({ name, url, img, position }) => {
                 <a className='fav-icons-link' target='_blank' rel="noreferrer" href={url}>
                     <img className='fav-icons-image' src={img} alt={name} />
                 </a>
-                <span className='fav-icons-name'>{name}</span>
+                <div className='fav-icons-name-container'>
+                    <span className='fav-icons-name' >{name}</span>
+                </div>
             </div>
         </Draggable>
     )

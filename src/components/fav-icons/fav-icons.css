@@ -19,6 +19,8 @@
 }
 
 .fav-icons-image {
+    position: absolute;
+    top: 0;
     width: 64px;
     height: 64px;
     border-radius: 50%;
@@ -30,17 +32,26 @@
     transform: scale(1.1);
 }
 
+.fav-icons-name-container {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 10px;
+}
+
 .fav-icons-name {
     text-align: center;
-    width: 100%;
+    width: 80px;
+    overflow: hidden;
+    height: 20px;
     font-size: 0.8em;
     margin-top: 5px;
 }
 
 .delete-icons {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 0px;
+    right: 15px;
     display: none;
     align-items: center;
     justify-content: center;

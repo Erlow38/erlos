@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './minesweeper.css';
 import Draggable from 'react-draggable';
 
@@ -7,11 +7,11 @@ interface MinesweeperDialogProps {
     setIsMinesweeperDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SIZE = 10; // Size of the grid
-const MINES_COUNT = 10; // Number of mines
+const SIZE = 10; 
+const MINES_COUNT = 10; 
 
 const generateEmptyGrid = () => {
-    return Array.from({ length: SIZE }, () => Array.from({ length: SIZE }, () => ({ isMine: false, isRevealed: false, count: 0 })));
+    return Array.from({ length: SIZE }, () => Array.from({ length: SIZE }, () => ({ isMine: false, isRevealed: false, isMarked: false, count: 0 })));
 };  
 
 const placeMines = (grid) => {
@@ -61,7 +61,6 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
     const [gameWon, setGameWon] = useState(false); 
 
     const resetGame = () => {
-        // Disabled the possibility to click on the grid after game over
         setGrid(() => {
             const newGrid = generateEmptyGrid();
             placeMines(newGrid);
@@ -77,12 +76,23 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
             grid[x][y].isRevealed = true; 
             setGameOver(true);
             resetGame();
-        } else {
+        } else if (gameOver || gameWon) {
+            return;
+        }
+        else {
             revealCell(grid, x, y);
             setGrid([...grid]);
             checkGameWon(); 
         }
     };    
+
+    const handleCellRightClick = (event, x, y) => {
+        event.preventDefault(); 
+        if (!gameOver && !gameWon) {
+            grid[x][y].isMarked = !grid[x][y].isMarked;
+            setGrid([...grid]);
+        }
+    };
 
     const checkGameWon = () => {
         let nonMineCellsRevealed = 0;
@@ -113,7 +123,9 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
         if (cell.isRevealed) {
             return cell.isMine ? <div className="mine" onClick={resetGame}>💣</div> : <div className="count">{cell.count > 0 ? cell.count : ''}</div>;
         } else {
-            return <div className={`cell ${gameOver ? 'revealed' : ''}`} onClick={() => handleCellClick(x, y)}></div>;
+            return <div className={`cell ${gameOver ? 'revealed' : ''}`} onClick={() => handleCellClick(x, y)} onContextMenu={(event) => handleCellRightClick(event, x, y)}>
+                {cell.isMarked && <div className="mine-flag">🚩</div>}
+            </div>;
         }
     };
 
@@ -141,8 +153,7 @@ const Minesweeper: React.FC<MinesweeperDialogProps> = ({ isMinesweeperDialogVisi
                                         </div>
                                     ))}
                                     <div className='game-over'>
-                                        {gameOver && 'Game Over!'}
-                                        {gameWon && 'You won!'}
+                                        {gameOver ? 'Game Over!' : gameWon ? 'You won!' : '10 mines to find'}
                                     </div>
                                 </div>
                             </div>

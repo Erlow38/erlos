@@ -27,7 +27,7 @@ const HelpDialog: React.FC<HelpDialogProps> = ({ isHelpDialogVisible, setIsHelpD
                             <div className="p-grid-help">
                                 <div>
                                     <p>
-                                        Welcome to ErlOS! This is a first page of a web browser. You can add your favorite websites to the home page by clicking on the Add button and choose your favorite theme by clicking on the Themes button!
+                                        Welcome to ErlOS! This is a home page of a web browser. You can add your favorite websites to the home page by clicking on the Add button and choose your favorite theme by clicking on the Themes button!
                                     </p>
                                     <p>
                                         You can put this page in first place when you open your browser in the settings of your browser.
