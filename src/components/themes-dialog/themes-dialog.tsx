@@ -46,6 +46,20 @@ const ThemesDialog: React.FC<ThemesDialogProps> = ({ isThemesDialogVisible, setI
         setIsThemesDialogVisible(false);
     }
 
+    const onClickAddcustomTheme = () => {
+        const customTheme = (document.getElementById('themes-custom-input') as HTMLInputElement).value;
+
+        setSelectedTheme(`url(${customTheme})`);
+
+        // Save to local storage
+        localStorage.setItem('selectedTheme', JSON.stringify(`url(${customTheme})`));
+
+        // Reload the page to apply the new theme
+        window.location.reload();
+
+        setIsThemesDialogVisible(false);
+    }
+
     const onModeSelect = (mode: Mode) => {
         setSelectedMode(mode.class);
 
@@ -97,6 +111,13 @@ const ThemesDialog: React.FC<ThemesDialogProps> = ({ isThemesDialogVisible, setI
                         <div className="themes-dialog-body">
                             <div className="p-grid">
                                 {themeItems}
+                                <div className="p-grid-custom-themes">
+                                    <label className="themes-custom-label" htmlFor="themes-custom-input">Custom</label>
+                                    <input id="themes-custom-input" type="text" placeholder="https://erlow.com/background.png" />
+                                    <button className="themes-custom-button" onClick={onClickAddcustomTheme}>
+                                        Add
+                                    </button>
+                                </div>
                             </div>
                         </div>
     
