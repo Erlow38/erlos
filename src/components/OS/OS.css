@@ -51,6 +51,10 @@
     z-index: 1000;
 }
 
+.p-dock-list-container img {
+    border-radius: 50%;
+}
+
 .fav-icons-display {
     display: flex;
     width: 100%;

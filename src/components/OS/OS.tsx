@@ -9,6 +9,7 @@ import FavIcons from '../fav-icons/fav-icons.tsx';
 import SearchBar from '../search-bar/search-bar.tsx';
 import HelpDialog from '../help-dialog/help-dialog.tsx';
 import Minesweeper from '../minesweeper/minesweeper.tsx';
+import CalculatorDialog from '../calculator-dialog/calculator-dialog.tsx';
 
 interface OSProps {
     visits: string | null;
@@ -24,6 +25,7 @@ interface FavIcon {
 const OS: React.FC<OSProps> = ({ visits }) => {
     const [isThemesDialogVisible, setIsThemesDialogVisible] = useState<boolean>(false);
     const [isChartsDialogVisible, setIsChartsDialogVisible] = useState<boolean>(false);
+    const [isCalculatorDialogVisible, setIsCalculatorDialogVisible] = useState<boolean>(false);
     const [isAddDialogVisible, setIsAddDialogVisible] = useState<boolean>(false);
     const [isHelpDialogVisible, setIsHelpDialogVisible] = useState<boolean>(false);
     const [isMinesweeperDialogVisible, setIsMinesweeperDialogVisible] = useState<boolean>(false);
@@ -63,6 +65,10 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         {
             label: 'Charts',
             icon: () => <img alt="Charts" src="./img/icons/charts.png" width="100%" />,
+        },
+        {
+            label: 'Calculator',
+            icon: () => <img alt="Calculator" src="./img/icons/calculator.png" width="100%" />,
         },
         {
             label: 'Add',
@@ -116,6 +122,17 @@ const OS: React.FC<OSProps> = ({ visits }) => {
                 setIsChartsDialogVisible(false);
             } else {
                 setIsChartsDialogVisible(true);
+            }
+        };
+    }
+
+    const calculatorItem = items.find(item => item.label === 'Calculator');
+    if (calculatorItem) {
+        calculatorItem.command = () => {
+            if (isCalculatorDialogVisible) {
+                setIsCalculatorDialogVisible(false);
+            } else {
+                setIsCalculatorDialogVisible(true);
             }
         };
     }
@@ -204,6 +221,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
 
                 {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} setSelectedTheme={setSelectedTheme} setSelectedMode={setSelectedMode} /> : null}
                 {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} visits={visits} /> : null}
+                {isCalculatorDialogVisible ? <CalculatorDialog setIsCalculatorDialogVisible={setIsCalculatorDialogVisible} isCalculatorDialogVisible={isCalculatorDialogVisible} /> : null}
                 {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
                 {isHelpDialogVisible ? <HelpDialog setIsHelpDialogVisible={setIsHelpDialogVisible} isHelpDialogVisible={isHelpDialogVisible} /> : null}
                 {isMinesweeperDialogVisible ? <Minesweeper setIsMinesweeperDialogVisible={setIsMinesweeperDialogVisible} isMinesweeperDialogVisible={isMinesweeperDialogVisible} /> : null}

@@ -43,7 +43,6 @@ const AddDialog: React.FC<AddDialogProps> = ({ isAddDialogVisible, setIsAddDialo
                             <div className="add-dialog-close pointer" onClick={setDialogVisible}>
                                 <span className="pi pi-times">&times;</span>
                             </div>
-
                         </div>
 
                         <div className="add-dialog-body">
