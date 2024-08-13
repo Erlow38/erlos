@@ -27,10 +27,27 @@ const HelpDialog: React.FC<HelpDialogProps> = ({ isHelpDialogVisible, setIsHelpD
                             <div className="p-grid-help">
                                 <div>
                                     <p>
-                                        Welcome to ErlOS! This is a home page of a web browser. You can add your favorite websites to the home page by clicking on the Add button and choose your favorite theme by clicking on the Themes button!
+                                        Welcome to ErlOS! This is a home page of a web browser with lots of features!
                                     </p>
                                     <p>
-                                        You can put this page in first place when you open your browser in the settings of your browser.
+                                        - You can add your favorite websites to the home page by clicking on the "Add" button.
+                                        <br />
+                                        - You can remove a website by clicking on the "Remove" button.
+                                        <br />
+                                        - You can change the theme and the background image by clicking on the "Themes" button.
+                                        <br />
+                                        - You can export or import your settings by clicking on the "Save" button.
+                                        <br />
+                                        - You can play minesweeper by clicking on the "Minesweeper" button.
+                                        <br />
+                                        - You can visualize charts by clicking on the "Charts" button.
+                                        <br />
+                                        - You can calculate by clicking on the "Calculator" button.
+                                        <br />
+                                        - You can navigate on the web by clicking on the "Browser" button or by searching in the search bar.
+                                    </p>
+                                    <p>
+                                        If you want to put this page in first place when you open your browser, you can search on the web how to do it with your browser! (<a className='help-link' href="https://support.google.com/chrome/answer/95314?hl=en&co=GENIE.Platform%3DDesktop" target="_blank" rel="noreferrer">Here is an example for Chrome</a>).
                                     </p>
                                     <p>
                                         Thank you for using ErlOS!

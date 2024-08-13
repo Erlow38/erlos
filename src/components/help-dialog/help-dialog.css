@@ -43,6 +43,11 @@
     height: 100%;
 }
 
+.help-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
 body.light .help-dialog-container {
     background-color: aliceblue;
     color: black;

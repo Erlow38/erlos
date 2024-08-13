@@ -10,6 +10,7 @@ import SearchBar from '../search-bar/search-bar.tsx';
 import HelpDialog from '../help-dialog/help-dialog.tsx';
 import Minesweeper from '../minesweeper/minesweeper.tsx';
 import CalculatorDialog from '../calculator-dialog/calculator-dialog.tsx';
+import SaveDialog from '../save-dialog/save-dialog.tsx';
 
 interface OSProps {
     visits: string | null;
@@ -29,6 +30,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
     const [isAddDialogVisible, setIsAddDialogVisible] = useState<boolean>(false);
     const [isHelpDialogVisible, setIsHelpDialogVisible] = useState<boolean>(false);
     const [isMinesweeperDialogVisible, setIsMinesweeperDialogVisible] = useState<boolean>(false);
+    const [isSaveDialogVisible, setIsSaveDialogVisible] = useState<boolean>(false);
 
     // get from local storage
     const [favIcons, setFavIcons] = useState<Array<any>>(JSON.parse(localStorage.getItem('favIcons') as string) || []);
@@ -71,6 +73,10 @@ const OS: React.FC<OSProps> = ({ visits }) => {
             icon: () => <img alt="Calculator" src="./img/icons/calculator.png" width="100%" />,
         },
         {
+            label: 'Minesweeper',
+            icon: () => <img alt="minesweeper" src="./img/icons/minesweeper.png" width="100%" />,
+        },
+        {
             label: 'Add',
             icon: () => <img alt="Add" src="./img/icons/add.png" width="100%" />,
         },
@@ -79,8 +85,8 @@ const OS: React.FC<OSProps> = ({ visits }) => {
             icon: () => <img alt="trash" src="./img/icons/trash.png" width="100%" />,
         },
         {
-            label: 'Minesweeper',
-            icon: () => <img alt="minesweeper" src="./img/icons/minesweeper.png" width="100%" />,
+            label: 'Save',
+            icon: () => <img alt="save" src="./img/icons/save.png" width="100%" />,
         },
         {
             label: 'Help',
@@ -167,6 +173,18 @@ const OS: React.FC<OSProps> = ({ visits }) => {
         };
     }
 
+    // On click on Save item, open a save dialog
+    const saveItem = items.find(item => item.label === 'Save');
+    if (saveItem) {
+        saveItem.command = () => {
+            if (isSaveDialogVisible) {
+                setIsSaveDialogVisible(false);
+            } else {
+                setIsSaveDialogVisible(true);
+            }
+        };
+    }
+
     // On click on Minesweeper item, open a minesweeper dialog
     const minesweeperItem = items.find(item => item.label === 'Minesweeper');
     if (minesweeperItem) {
@@ -223,6 +241,7 @@ const OS: React.FC<OSProps> = ({ visits }) => {
                 {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} visits={visits} /> : null}
                 {isCalculatorDialogVisible ? <CalculatorDialog setIsCalculatorDialogVisible={setIsCalculatorDialogVisible} isCalculatorDialogVisible={isCalculatorDialogVisible} /> : null}
                 {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
+                {isSaveDialogVisible ? <SaveDialog setIsSaveDialogVisible={setIsSaveDialogVisible} isSaveDialogVisible={isSaveDialogVisible} /> : null}
                 {isHelpDialogVisible ? <HelpDialog setIsHelpDialogVisible={setIsHelpDialogVisible} isHelpDialogVisible={isHelpDialogVisible} /> : null}
                 {isMinesweeperDialogVisible ? <Minesweeper setIsMinesweeperDialogVisible={setIsMinesweeperDialogVisible} isMinesweeperDialogVisible={isMinesweeperDialogVisible} /> : null}
 
