@@ -14,17 +14,17 @@ const FavIcons: React.FC<FavIconsProps> = ({ name, url, img, position }) => {
         const { x, y } = ui;
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const iconWidth = 100; // Taille de l'icône
-        const iconHeight = 100; // Taille de l'icône
+        const iconWidth = 100; // Width of the icon
+        const iconHeight = 100; // Height of the icon
 
-        // Vérifier si l'icône sort de l'écran en x
+        // Check if the icon goes out of the screen in x
         if (x < 0) {
             ui.x = 0;
         } else if (x + iconWidth > windowWidth) {
             ui.x = windowWidth - iconWidth;
         }
 
-        // Vérifier si l'icône sort de l'écran en y
+        // Check if the icon goes out of the screen in y
         if (y < 0) {
             ui.y = 0;
         } else if (y + iconHeight > windowHeight) {
