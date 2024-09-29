@@ -21,12 +21,21 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ dataset, labels }) => {
                     backgroundColor: [
                         documentStyle.getPropertyValue('--blue-500'), 
                         documentStyle.getPropertyValue('--gray-500'), 
-                        documentStyle.getPropertyValue('--green-500')
+                        documentStyle.getPropertyValue('--green-500'),
+                        documentStyle.getPropertyValue('--red-500'), 
+                        documentStyle.getPropertyValue('--orange-500'),
+                        documentStyle.getPropertyValue('--pink-500'), 
+                        documentStyle.getPropertyValue('--purple-500'),
+
                     ],
                     hoverBackgroundColor: [
                         documentStyle.getPropertyValue('--blue-400'), 
                         documentStyle.getPropertyValue('--gray-400'), 
-                        documentStyle.getPropertyValue('--green-400')
+                        documentStyle.getPropertyValue('--green-400'),
+                        documentStyle.getPropertyValue('--red-400'), 
+                        documentStyle.getPropertyValue('--orange-400'), 
+                        documentStyle.getPropertyValue('--pink-400'), 
+                        documentStyle.getPropertyValue('--purple-400'),
                     ]
                 }
             ]

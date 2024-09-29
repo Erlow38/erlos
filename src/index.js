@@ -6,7 +6,6 @@ import 'primereact/resources/themes/lara-light-indigo/theme.css';
 
 import './index.css';
 import './components/OS/OS.css';
-import './components/OS/flags.css';
 import App from './App.tsx';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Draggable from 'react-draggable'; // Import de react-draggable
+import React, { useState, useEffect } from "react";
+import Draggable from 'react-draggable'; 
 import './charts-dialog.css';
 import DoughnutChart from "../charts/doughnut-chart/doughnut-chart.tsx";
 import BarChart from "../charts/bar-chart/bar-chart.tsx";
@@ -7,49 +7,91 @@ import BarChart from "../charts/bar-chart/bar-chart.tsx";
 interface ChartsDialogProps {
     isChartsDialogVisible: boolean;
     setIsChartsDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    visits: string | null;
 }
 
-const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setIsChartsDialogVisible, visits }) => {
-    const [fps, setFps] = useState<number>(0);
-    const [memoryUsedMB, setMemoryUsedMB] = useState<number>(0);
-    const visitsNumber = parseInt(visits as string);
+interface ChartData {
+    type: 'doughnut' | 'bar';
+    dataset: number[];
+    labels: string[];
+    title: string;  
+    label?: string;
+    position?: { x: number; y: number }; // Ajout de la position
+}
+
+const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setIsChartsDialogVisible }) => {
+    const [charts, setCharts] = useState<ChartData[]>([]); 
+    const [newChartType, setNewChartType] = useState<'doughnut' | 'bar'>('doughnut'); 
+    const [newDataset, setNewDataset] = useState<number[]>([100, 200]); 
+    const [newLabels, setNewLabels] = useState<string[]>(["Label 1", "Label 2"]); 
+    const [newTitle, setNewTitle] = useState<string>("Chart Title"); 
+
+    // Load charts from localStorage when dialog is visible
+    useEffect(() => {
+        if (isChartsDialogVisible) {
+            const storedCharts = localStorage.getItem('charts');
+            if (storedCharts) {
+                const parsedCharts: ChartData[] = JSON.parse(storedCharts);
+                setCharts(parsedCharts);
+            } else {
+                setCharts([]); // Ensure charts is set to empty array if nothing in localStorage
+            }
+        }
+    }, [isChartsDialogVisible]);
 
     const setDialogVisible = () => {
         setIsChartsDialogVisible(!isChartsDialogVisible);
-    }
+    };
 
-    useEffect(() => {
-        let lastFrameTime = performance.now();
-        let frameCount = 0;
-        let frameId: number;
-
-        const measureFPS = () => {
-            const now = performance.now();
-            const elapsed = now - lastFrameTime;
-
-            if (elapsed >= 1000) {
-                const currentFPS = Math.round((frameCount * 1000) / elapsed);
-                setFps(currentFPS);
-                frameCount = 0;
-                lastFrameTime = now;
-            }
-
-            frameCount++;
-            frameId = requestAnimationFrame(measureFPS);
+    const addNewChart = () => {
+        const newChart: ChartData = {
+            type: newChartType,
+            dataset: newDataset,
+            labels: newLabels,
+            title: newTitle,
+            label: newChartType === 'bar' ? "Data" : undefined,
+            position: { x: 0, y: 0 }, // Initial position
         };
+        setCharts(prevCharts => {
+            const updatedCharts = [newChart, ...prevCharts];
+            localStorage.setItem('charts', JSON.stringify(updatedCharts)); 
+            return updatedCharts;
+        });
+    };
+    
 
-        frameId = requestAnimationFrame(measureFPS);
+    const updateChartPosition = (index: number, position: { x: number; y: number }) => {
+        const updatedCharts = charts.map((chart, i) => {
+            if (i === index) {
+                return { ...chart, position };
+            }
+            return chart;
+        });
+        setCharts(updatedCharts);
+    };
 
-        
-        if (window.performance && (window.performance as any).memory) {
-            const memoryInfo = (window.performance as any).memory;
-            const usedMemoryMB = parseFloat((memoryInfo.usedJSHeapSize / (1024 * 1024)).toFixed(2));
-            setMemoryUsedMB(usedMemoryMB);
-        }
+    const renderChart = (chart: ChartData, index: number) => {
+        return (
+            <div className="chart-container">
+                <p className="chart-title">{chart.title}</p>
+                {chart.type === 'doughnut' && (
+                    <DoughnutChart dataset={chart.dataset} labels={chart.labels} />
+                )}
+                {chart.type === 'bar' && (
+                    <BarChart dataset={chart.dataset} labels={chart.labels} label={chart.label || "Chart"} />
+                )}
+                <button className="delete-chart-btn" onClick={() => removeChart(index)}>
+                    Delete
+                </button>
+            </div>
+        );
+    };
 
-        return () => cancelAnimationFrame(frameId);
-    }, []);
+    const removeChart = (index: number) => {
+        const updatedCharts = charts.filter((_, i) => i !== index);
+        setCharts(updatedCharts);
+    
+        localStorage.setItem('charts', JSON.stringify(updatedCharts));
+    };
 
     return (
         <Draggable handle=".charts-dialog-header">
@@ -63,14 +105,49 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                             </div>
                         </div>
                         <div className="charts-dialog-body">
-                            <DoughnutChart dataset={[visitsNumber, 1000 - visitsNumber]} labels={["Visits", "Goal"]} />
-                            <BarChart dataset={[memoryUsedMB, fps]} labels={["Memory Used (MB)", "FPS"]} label="Performance indicator" />
+                            <div className="new-chart-controls">
+                                <div>
+                                    <label>Chart Type:</label>
+                                    <select value={newChartType} onChange={(e) => setNewChartType(e.target.value as 'doughnut' | 'bar')}>
+                                        <option value="doughnut">Doughnut</option>
+                                        <option value="bar">Bar</option>
+                                    </select>
+                                </div>
+                                <div className="new-chart-content">
+                                    <label>Data (comma-separated):</label>
+                                    <input 
+                                        type="text" 
+                                        value={newDataset.join(',')} 
+                                        onChange={(e) => setNewDataset(e.target.value.split(',').map(Number))}
+                                    />
+                                </div>
+                                <div className="new-chart-content">
+                                    <label>Labels (comma-separated):</label>
+                                    <input 
+                                        type="text" 
+                                        value={newLabels.join(',')} 
+                                        onChange={(e) => setNewLabels(e.target.value.split(','))}
+                                    />
+                                </div>
+                                <div className="new-chart-content">
+                                    <label>Chart Title:</label>
+                                    <input 
+                                        type="text" 
+                                        value={newTitle} 
+                                        onChange={(e) => setNewTitle(e.target.value)}
+                                    />
+                                </div>
+                                <button onClick={addNewChart}>Add Chart</button>
+                            </div>
+                            <div className="charts-container">
+                                {charts.map((chart, index) => renderChart(chart, index))} 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </Draggable>
-    )
-}
+    );
+};
 
 export default ChartsDialog;

@@ -56,6 +56,12 @@ const OS: React.FC<OSProps> = ({ visits }) => {
             label: 'Erlow',
             icon: () => <img alt="Erlow" src="./img/icons/e.png" width="100%" />,
         },
+        /*
+        {
+            label: 'Taverne',
+            icon: () => <img alt="Erlow" src="./img/icons/taverne.png" width="100%" />,
+        },
+        */
         {
             label: 'Web',
             icon: () => <img alt="Web" src="./img/icons/web.png" width="100%" />,
@@ -237,9 +243,9 @@ const OS: React.FC<OSProps> = ({ visits }) => {
 
                 <SearchBar />
 
-                {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} setSelectedTheme={setSelectedTheme} setSelectedMode={setSelectedMode} /> : null}
-                {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} visits={visits} /> : null}
+                {isChartsDialogVisible ? <ChartsDialog setIsChartsDialogVisible={setIsChartsDialogVisible} isChartsDialogVisible={isChartsDialogVisible} /> : null}
                 {isCalculatorDialogVisible ? <CalculatorDialog setIsCalculatorDialogVisible={setIsCalculatorDialogVisible} isCalculatorDialogVisible={isCalculatorDialogVisible} /> : null}
+                {isThemesDialogVisible ? <ThemesDialog setIsThemesDialogVisible={setIsThemesDialogVisible} isThemesDialogVisible={isThemesDialogVisible} setSelectedTheme={setSelectedTheme} setSelectedMode={setSelectedMode} /> : null}
                 {isAddDialogVisible ? <AddDialog setIsAddDialogVisible={setIsAddDialogVisible} isAddDialogVisible={isAddDialogVisible} favIcons={favIcons} setFavIcons={setFavIcons} /> : null}
                 {isSaveDialogVisible ? <SaveDialog setIsSaveDialogVisible={setIsSaveDialogVisible} isSaveDialogVisible={isSaveDialogVisible} /> : null}
                 {isHelpDialogVisible ? <HelpDialog setIsHelpDialogVisible={setIsHelpDialogVisible} isHelpDialogVisible={isHelpDialogVisible} /> : null}

@@ -40,7 +40,7 @@ const HelpDialog: React.FC<HelpDialogProps> = ({ isHelpDialogVisible, setIsHelpD
                                         <br />
                                         - You can play minesweeper by clicking on the "Minesweeper" button.
                                         <br />
-                                        - You can visualize charts by clicking on the "Charts" button.
+                                        - You can create and visualize charts by clicking on the "Charts" button.
                                         <br />
                                         - You can calculate by clicking on the "Calculator" button.
                                         <br />
@@ -48,6 +48,9 @@ const HelpDialog: React.FC<HelpDialogProps> = ({ isHelpDialogVisible, setIsHelpD
                                     </p>
                                     <p>
                                         If you want to put this page in first place when you open your browser, you can search on the web how to do it with your browser! (<a className='help-link' href="https://support.google.com/chrome/answer/95314?hl=en&co=GENIE.Platform%3DDesktop" target="_blank" rel="noreferrer">Here is an example for Chrome</a>).
+                                    </p>
+                                    <p>
+                                        For any questions, you can contact me via X (<a className='help-link' href="https://x.com/ErlowDev" target="_blank" rel="noreferrer">@ErlowDev</a>) or my email address (<a className='help-link' href='mailto:erlowdev@gmail.com' target="_blank" rel="noreferrer">erlowdev@gmail.com</a>).
                                     </p>
                                     <p>
                                         Thank you for using ErlOS!
