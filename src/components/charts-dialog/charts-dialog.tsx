@@ -15,7 +15,6 @@ interface ChartData {
     labels: string[];
     title: string;  
     label?: string;
-    position?: { x: number; y: number }; // Ajout de la position
 }
 
 const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setIsChartsDialogVisible }) => {
@@ -24,8 +23,8 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
     const [newDataset, setNewDataset] = useState<number[]>([100, 200]); 
     const [newLabels, setNewLabels] = useState<string[]>(["Label 1", "Label 2"]); 
     const [newTitle, setNewTitle] = useState<string>("Chart Title"); 
+    const [editIndex, setEditIndex] = useState<number | null>(null); 
 
-    // Load charts from localStorage when dialog is visible
     useEffect(() => {
         if (isChartsDialogVisible) {
             const storedCharts = localStorage.getItem('charts');
@@ -33,7 +32,7 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                 const parsedCharts: ChartData[] = JSON.parse(storedCharts);
                 setCharts(parsedCharts);
             } else {
-                setCharts([]); // Ensure charts is set to empty array if nothing in localStorage
+                setCharts([]); 
             }
         }
     }, [isChartsDialogVisible]);
@@ -42,36 +41,50 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
         setIsChartsDialogVisible(!isChartsDialogVisible);
     };
 
-    const addNewChart = () => {
-        const newChart: ChartData = {
+    const resetForm = () => {
+        setNewChartType('doughnut');
+        setNewDataset([100, 200]);
+        setNewLabels(["Label 1", "Label 2"]);
+        setNewTitle("Chart Title");
+        setEditIndex(null); // Réinitialiser l'édition
+    };
+
+    const addOrUpdateChart = () => {
+        const updatedChart: ChartData = {
             type: newChartType,
             dataset: newDataset,
             labels: newLabels,
             title: newTitle,
-            label: newChartType === 'bar' ? "Data" : undefined,
-            position: { x: 0, y: 0 }, // Initial position
+            label: newChartType === 'bar' ? "Data" : undefined
         };
+
         setCharts(prevCharts => {
-            const updatedCharts = [newChart, ...prevCharts];
+            let updatedCharts;
+            if (editIndex !== null) { 
+                updatedCharts = prevCharts.map((chart, i) => (i === editIndex ? updatedChart : chart));
+                setEditIndex(null); 
+            } else {
+                updatedCharts = [updatedChart, ...prevCharts];
+            }
             localStorage.setItem('charts', JSON.stringify(updatedCharts)); 
             return updatedCharts;
         });
-    };
-    
 
-    const updateChartPosition = (index: number, position: { x: number; y: number }) => {
-        const updatedCharts = charts.map((chart, i) => {
-            if (i === index) {
-                return { ...chart, position };
-            }
-            return chart;
-        });
-        setCharts(updatedCharts);
+        resetForm(); // Réinitialiser le formulaire après ajout ou mise à jour
+    };
+
+    const editChart = (index: number) => {
+        const chartToEdit = charts[index];
+        setNewChartType(chartToEdit.type);
+        setNewDataset(chartToEdit.dataset);
+        setNewLabels(chartToEdit.labels);
+        setNewTitle(chartToEdit.title);
+        setEditIndex(index); 
     };
 
     const renderChart = (chart: ChartData, index: number) => {
         return (
-            <div className="chart-container">
+            <div className="chart-container" key={index}>
                 <p className="chart-title">{chart.title}</p>
                 {chart.type === 'doughnut' && (
                     <DoughnutChart dataset={chart.dataset} labels={chart.labels} />
@@ -79,9 +92,14 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                 {chart.type === 'bar' && (
                     <BarChart dataset={chart.dataset} labels={chart.labels} label={chart.label || "Chart"} />
                 )}
-                <button className="delete-chart-btn" onClick={() => removeChart(index)}>
-                    Delete
-                </button>
+                <div className="chart-actions">
+                    <button className="edit-chart-btn" onClick={() => editChart(index)}>
+                        Edit
+                    </button>
+                    <button className="delete-chart-btn" onClick={() => removeChart(index)}>
+                        Delete
+                    </button>
+                </div>
             </div>
         );
     };
@@ -89,7 +107,6 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
     const removeChart = (index: number) => {
         const updatedCharts = charts.filter((_, i) => i !== index);
         setCharts(updatedCharts);
-    
         localStorage.setItem('charts', JSON.stringify(updatedCharts));
     };
 
@@ -137,7 +154,16 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                                         onChange={(e) => setNewTitle(e.target.value)}
                                     />
                                 </div>
-                                <button onClick={addNewChart}>Add Chart</button>
+                                <div className="chart-buttons">
+                                    <button onClick={addOrUpdateChart}>
+                                        {editIndex !== null ? "Update Chart" : "Add Chart"}
+                                    </button>
+                                    {editIndex !== null && (
+                                        <button onClick={resetForm} className="cancel-edit-btn">
+                                            Cancel Edit
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                             <div className="charts-container">
                                 {charts.map((chart, index) => renderChart(chart, index))} 

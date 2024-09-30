@@ -65,6 +65,10 @@
     text-align: center;
 }
 
+.edit-chart-btn, .chart-buttons button {
+    margin-right: 5px;
+}
+
 select {
     border-radius: 5px;
     padding: 2px 6px;
