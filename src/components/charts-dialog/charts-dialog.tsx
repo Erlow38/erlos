@@ -46,10 +46,11 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
         setNewDataset([100, 200]);
         setNewLabels(["Label 1", "Label 2"]);
         setNewTitle("Chart Title");
-        setEditIndex(null); // Reset editing
+        setEditIndex(null); 
     };
 
-    const addOrUpdateChart = () => {
+    const addOrUpdateChart = () => {        
+        // Create or update chart based on form data
         const updatedChart: ChartData = {
             type: newChartType,
             dataset: newDataset,
@@ -61,25 +62,48 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
         setCharts(prevCharts => {
             let updatedCharts;
             if (editIndex !== null) { 
+                // Update existing chart
                 updatedCharts = prevCharts.map((chart, i) => (i === editIndex ? updatedChart : chart));
                 setEditIndex(null); 
-            } else {
+            } else {                
+                // Add new chart
                 updatedCharts = [updatedChart, ...prevCharts];
             }
             localStorage.setItem('charts', JSON.stringify(updatedCharts)); 
             return updatedCharts;
         });
 
-        resetForm(); // Reset form after adding or updating
+        resetForm(); 
     };
 
     const editChart = (index: number) => {
+        // Load chart data into form for editing
         const chartToEdit = charts[index];
         setNewChartType(chartToEdit.type);
         setNewDataset(chartToEdit.dataset);
         setNewLabels(chartToEdit.labels);
         setNewTitle(chartToEdit.title);
         setEditIndex(index); 
+    };
+
+    const moveChartLeft = (index: number) => {        
+        // Move chart left in the list
+        if (index > 0) {
+            const updatedCharts = [...charts];
+            [updatedCharts[index - 1], updatedCharts[index]] = [updatedCharts[index], updatedCharts[index - 1]];
+            setCharts(updatedCharts);
+            localStorage.setItem('charts', JSON.stringify(updatedCharts));
+        }
+    };
+
+    const moveChartRight = (index: number) => {
+        // Move chart right in the list
+        if (index < charts.length - 1) {
+            const updatedCharts = [...charts];
+            [updatedCharts[index], updatedCharts[index + 1]] = [updatedCharts[index + 1], updatedCharts[index]];
+            setCharts(updatedCharts);
+            localStorage.setItem('charts', JSON.stringify(updatedCharts));
+        }
     };
 
     const renderChart = (chart: ChartData, index: number) => {
@@ -99,12 +123,19 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                     <button className="delete-chart-btn" onClick={() => removeChart(index)}>
                         Delete
                     </button>
+                    <button className="move-left-btn" onClick={() => moveChartLeft(index)}>
+                    ←
+                    </button>
+                    <button className="move-right-btn" onClick={() => moveChartRight(index)}>
+                    →
+                    </button>
                 </div>
             </div>
         );
     };
 
-    const removeChart = (index: number) => {
+    const removeChart = (index: number) => {        
+        // Remove chart from the list
         const updatedCharts = charts.filter((_, i) => i !== index);
         setCharts(updatedCharts);
         localStorage.setItem('charts', JSON.stringify(updatedCharts));
@@ -152,6 +183,7 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                                         type="text" 
                                         value={newTitle} 
                                         onChange={(e) => setNewTitle(e.target.value)}
+                                        maxLength={30}
                                     />
                                 </div>
                                 <div className="chart-buttons">

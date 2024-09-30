@@ -65,7 +65,7 @@
     text-align: center;
 }
 
-.edit-chart-btn, .chart-buttons button {
+.chart-actions button, .chart-buttons button {
     margin-right: 5px;
 }
 
