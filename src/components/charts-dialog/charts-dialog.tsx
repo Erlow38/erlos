@@ -46,7 +46,7 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
         setNewDataset([100, 200]);
         setNewLabels(["Label 1", "Label 2"]);
         setNewTitle("Chart Title");
-        setEditIndex(null); // Réinitialiser l'édition
+        setEditIndex(null); // Reset editing
     };
 
     const addOrUpdateChart = () => {
@@ -70,7 +70,7 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
             return updatedCharts;
         });
 
-        resetForm(); // Réinitialiser le formulaire après ajout ou mise à jour
+        resetForm(); // Reset form after adding or updating
     };
 
     const editChart = (index: number) => {
