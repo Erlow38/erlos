@@ -60,17 +60,40 @@
     border-radius: 7px;
 }
 
+.add-data-point {
+    margin: 10px 20px 10px 0;
+}
+
+.data-pills {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.data-pill {
+    margin: 0 0 10px 0;
+}
+
+.data-pill button {
+    margin: 0 20px 0 5px;
+}
+
 .chart-title {
     width: 100%;
     text-align: center;
+    padding: 0px 10px;
+    margin: 10px 0 0 0;
+}
+
+.data-input {
+    margin-top: 10px;
 }
 
 .chart-actions button, .chart-buttons button {
     margin-right: 5px;
 }
 
-.chart-title {
-    padding: 0px 10px;
+.chart-buttons button {
+    margin-top: 0;
 }
 
 select {

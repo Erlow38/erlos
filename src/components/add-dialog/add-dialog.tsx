@@ -60,7 +60,7 @@ const AddDialog: React.FC<AddDialogProps> = ({ isAddDialogVisible, setIsAddDialo
                                     <input id="fav-icon-input" type="text" placeholder="ex: https://erlow.com/favicon.ico" />
                                 </div>
                             </div>
-                            <button onClick={onClickAddfav}>
+                            <button className='add-dialog-button' onClick={onClickAddfav}>
                                 Add
                             </button>
                         </div>
