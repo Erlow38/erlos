@@ -242,9 +242,13 @@ const ChartsDialog: React.FC<ChartsDialogProps> = ({ isChartsDialogVisible, setI
                                     <button onClick={clearAllCharts}>Clear All Charts</button>
                                 </div>
                             )}
-                            <div className="charts-container">
-                                {charts.map((chart, index) => renderChart(chart, index))}
-                            </div>
+                            {
+                                charts.length !== 0 ?
+                                    <div className="charts-container">
+                                        {charts.map((chart, index) => renderChart(chart, index))}
+                                    </div> : null
+                            }
+                            
                         </div>
                     </div>
                 </div>
